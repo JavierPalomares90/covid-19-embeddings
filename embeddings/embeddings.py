@@ -1,6 +1,7 @@
 from cotools import Paperset
+from .scorings import Score
 
-class Embeddings:
+class Embeddings(object):
     """
     The Embeddings class:
         __init__ args:
@@ -38,6 +39,14 @@ class EmbeddingIndex:
         '''
         Index the data
         '''
+    
+    def _get_scoring(self,scoring_method):
+        if not scoring_method:
+            return None
+        score = Score(scoring_method)
+        return score
+        
+
 
 
 
@@ -47,6 +56,9 @@ class EmbeddingIndex:
         Build the setence embedding index
             scoring_method: The embeddings scoring method to use for the embeddings "bm25", "BERT", etc...
         '''
+
+        score = _get_scoring(scoring_method)
+        score.score_data(self.data)
         if scoring_method:
             score(self.data,scoring_method)
 

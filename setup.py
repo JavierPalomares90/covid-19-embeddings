@@ -15,7 +15,7 @@ setuptools.setup(
     url="https://github.com/JavierPalomares90/covid-19-embeddings",
     maintainer="Javier Palomares",
     maintainer_email="javier.palomares.90@gmail.com",
-    packages=["embeddings"],
+    packages=["embeddings","scorings"],
     license="GPL version 3",
     classifiers=[
         "Programming Language :: Python :: 3",
