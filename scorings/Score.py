@@ -5,6 +5,7 @@ Base Score class
 
 import math
 import pickle
+import cotools
 
 from collections import Counter
 
@@ -29,9 +30,15 @@ class Score(object):
     def index(self,docs):
         """
         Index the documents using the scoring method
-        Input: The paperset class representing the docs
+        Input: The Paperset lazy loader containing the documents
         """
         #TODO: Complete impl
+        num_docs = len(docs)
+        for i in range(num_docs):
+            doc = doc[i]
+            # get the text
+            doc_text = cotools.text(doc)
+            #TODO: Get the tags
         pass
     
     def weights(self,docs):
