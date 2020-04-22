@@ -15,6 +15,7 @@ class Embeddings(object):
 
     def __init__(self,pca,scoring_method=None):
         self.scoring_method = scoring_method
+        # principal components
         self.pca = pca
 
 class EmbeddingIndex:
