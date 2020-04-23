@@ -22,7 +22,7 @@ class Score(object):
         self.word_freq = Counter()
         self.avg_freq = 0
 
-        self.score = dict()
+        self.scores = dict()
         self.avg_score = dict()
 
         self.tags = Counter()
@@ -75,21 +75,53 @@ class Score(object):
         # compute scores using the scoring method
         for token, freq in self.doc_freq.items():
             #TODO: implement compute_score
-            self.score[token] = self.compute_score(freq)
+            self.scores[token] = self.compute_score(freq)
         
-        self.avg_score[token] = sum(self.score.values()) / len(self.score)
+        self.avg_score[token] = sum(self.scores.values()) / len(self.scores)
 
         # filter for tags that appear in at least 1% of documents
         _filter_tags(.009)
 
-    
-    def weights(self,docs):
-        """
-        Build the weight vector for each token in the input token
-        Input: 
-        """
+    def _get_token_weight(self,freq,score,num_tokens):
         #TODO: Complete impl
         pass
+
+    
+    def weights(self,doc):
+        """
+        Build the weight vector for the tokens in the document
+        Input: 
+        """
+
+        weights = list()
+        # get the text
+        doc_text = cotools.text(doc)
+        tokens,_ = _get_doc_tokens_and_tags(doc_text)
+
+        num_tokens = len(tokens)
+
+        for token in tokens:
+            # get the frequency and score for the token
+            freq = self.word_freq.get(token)
+            score = self.scores.get(token)
+            if not freq:
+                freq = self.avg_freq
+            if not score:
+                score = self.avg_score
+            
+            token_weight = self._get_token_weight(freq,score,num_tokens)
+            weights.append(token_weight)
+        
+        # boost weights of tag tokens to equal the largest weight in the list
+        if self.tags:
+            tags = {token: self.tags[token] for token in tokens if token in self.tags}
+            if tags:
+                max_weight = max(weights)
+                max_tag = max(tags.values())
+                weights = [max(max_weight * (tags[tokens[x]] / max_tag), weight)
+                           if tokens[x] in tags else weight for x, weight in enumerate(weights)]
+                           
+        return weights
     
     def load(self,path):
         """
