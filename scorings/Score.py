@@ -82,10 +82,6 @@ class Score(object):
         # filter for tags that appear in at least 1% of documents
         _filter_tags(.009)
 
-    def _get_token_weight(self,freq,score,num_tokens):
-        #TODO: Complete impl
-        pass
-
     
     def weights(self,doc):
         """
