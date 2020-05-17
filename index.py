@@ -1,7 +1,9 @@
 import argparse
 import logging
 import os
-from .embeddings import embeddings
+from .embeddings.embeddings import Embeddings
+from .scorings.ScoringMethod import ScoringMethod
+import cotools
 
 
 '''
@@ -18,8 +20,9 @@ def get_args():
     return args
 
 def build_embeddings(document_path,vector_path):
-    #TODO: Complete impl
-    pass
+    embeddings = Embeddings(pca=3,scoring_method=ScoringMethod.BM25)
+    embedding.build_embeddings()
+    return embeddings
     
 
 def main():

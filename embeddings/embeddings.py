@@ -13,10 +13,14 @@ class Embeddings(object):
 
     """
 
-    def __init__(self,pca,scoring_method=None):
+    def __init__(self,pca,scoring_method,documents):
         self.scoring_method = scoring_method
         # principal components
         self.pca = pca
+        self.embedding_index = EmbeddingIndex(documents)
+    
+    def get_embeddings(self):
+        self.embedding_index.build_index(self.pca,self.scoring_method)
 
 class EmbeddingIndex:
     """
