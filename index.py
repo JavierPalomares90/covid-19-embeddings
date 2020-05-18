@@ -21,7 +21,7 @@ def get_args():
 
 def build_embeddings(document_path,vector_path):
     embeddings = Embeddings(pca=3,scoring_method=ScoringMethod.BM25)
-    embedding.build_embeddings()
+    embeddings.build_index()
     return embeddings
     
 

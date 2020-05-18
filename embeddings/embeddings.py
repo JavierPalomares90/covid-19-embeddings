@@ -5,34 +5,22 @@ class Embeddings(object):
     """
     The Embeddings class:
         __init__ args:
+            pca: the principal components
+
             scoring_method: The embeddings scoring method to use for the embeddings "bm25", "BERT", etc...
 
+            documents: a Paperset, the lazyloader where to get the papers from
 
             description:
                 build a sentence embedding index from the Paperset 
-
     """
 
     def __init__(self,pca,scoring_method,documents):
+        #TODO: Map the documents Paperset class to data
         self.scoring_method = scoring_method
+        self.documents = documents
         # principal components
         self.pca = pca
-        self.embedding_index = EmbeddingIndex(documents)
-    
-    def get_embeddings(self):
-        self.embedding_index.build_index(self.pca,self.scoring_method)
-
-class EmbeddingIndex:
-    """
-    The EmbeddingIndex class:
-        __init__ args:
-            data: a Paperset, the lazyloader where to get the papers from
-
-            description:
-                build a sentence embedding index from the Paperset 
-    """
-    def __init__(self, data):
-        self.data = data
 
     def score(self,data,scoring_method):
         ''' 
@@ -57,19 +45,14 @@ class EmbeddingIndex:
         return score
         
 
-
-
-
-
-    def build_index(self,pca,scoring_method=None):
+    def build_index(self):
         '''
         Build the sentence embedding index
             scoring_method: The embeddings scoring method to use for the embeddings "bm25", "BERT", etc...
         '''
-
-        self.score = _get_scoring(scoring_method)
+        self.score = _get_scoring(self.scoring_method)
         self.score.score_data(self.data)
         if scoring_method:
-            score(self.data,scoring_method)
+            score(self.documents,scoring_method)
 
-        index(self.data)
+        index(self.documents)
