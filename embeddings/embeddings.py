@@ -1,5 +1,6 @@
 from cotools import Paperset
 from .scorings import Score
+import pickle
 
 class Embeddings(object):
     """
@@ -56,3 +57,17 @@ class Embeddings(object):
             score(self.documents,scoring_method)
 
         index(self.documents)
+
+    def load(self,path):
+        """
+        Unpickle the saved Embeddings object
+        """
+        with open("%s/embedding" % path, "rb") as handle:
+            self.__dict__.update(pickle.load(handle))
+    
+    def save(self,path):
+        """
+        Pickle the embedding
+        """
+        with open("%s/embedding" % path, "wb") as handle:
+            pickle.dump(self.__dict__, handle, protocol=pickle.HIGHEST_PROTOCOL)
