@@ -37,6 +37,10 @@ class Score(object):
             if(score > self.num_docs * threshold):
                 valid_tags[tag] = score
         self.tags = valid_tags
+
+    def score_data(self,data):
+        #TODO: Finish impl
+        pass
     
     def index(self,docs):
         """
