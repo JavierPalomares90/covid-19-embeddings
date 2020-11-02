@@ -11,7 +11,7 @@ from collections import Counter
 
 class Score(object):
     
-    def __init__(self):
+    def __init__(self,scoring_method):
         super().__init__()
 
         self.total_tokens = 0

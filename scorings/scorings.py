@@ -1,4 +1,4 @@
-import scorings.ScoringMethod.ScoringMethod as ScoringMethod
+import scorings.ScoringMethod as ScoringMethod
 import scorings.TFIDF as TFIDF
 import scorings.BM25 as BM25
 import scorings.SIF as SIF

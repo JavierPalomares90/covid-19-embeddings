@@ -1,8 +1,8 @@
 import argparse
 import logging
 import os
-from .embeddings.embeddings import Embeddings
-from .scorings.ScoringMethod import ScoringMethod
+from embeddings.embeddings import Embeddings
+from scorings.ScoringMethod import ScoringMethod
 import cotools
 
 
@@ -20,7 +20,7 @@ def get_args():
     return args
 
 def build_embeddings(document_path,vector_path):
-    embeddings = Embeddings(pca=3,scoring_method=ScoringMethod.BM25)
+    embeddings = Embeddings(pca=3,scoring_method=ScoringMethod.BM25,documents=document_path)
     embeddings.build_index()
     return embeddings
     
@@ -29,7 +29,7 @@ def main():
     args = get_args()
     document_path = args.document_path
     save_path = args.save_path
-    if not os.path.exist(document_path):
+    if not os.path.exists(document_path):
         # TODO: Change to automatically get the data using cotools
         logging.error("Did not find documents at {}".format(document_path))
     if not os.path.exists(save_path):

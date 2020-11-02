@@ -1,5 +1,5 @@
 from cotools import Paperset
-from .scorings import Score
+from scorings.Score import Score
 import pickle
 
 class Embeddings(object):
@@ -42,7 +42,7 @@ class Embeddings(object):
     def _get_scoring(self,scoring_method):
         if not scoring_method:
             return None
-        score = Score(scoring_method)
+        score = Score(scoring_method=scoring_method)
         return score
         
 
@@ -51,12 +51,12 @@ class Embeddings(object):
         Build the sentence embedding index
             scoring_method: The embeddings scoring method to use for the embeddings "bm25", "BERT", etc...
         '''
-        self.score = _get_scoring(self.scoring_method)
+        self.score = self._get_scoring(self.scoring_method)
         self.score.score_data(self.data)
-        if scoring_method:
-            score(self.documents,scoring_method)
+        if self.scoring_method:
+            self.score(self.documents,self.scoring_method)
 
-        index(self.documents)
+        self.index(self.documents)
 
     def load(self,path):
         """
